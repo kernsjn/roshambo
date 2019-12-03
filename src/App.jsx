@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Game from './components/Game'
 
 const App = props => {
   const [playerBoard, setPlayerBoard] = useState()
@@ -7,46 +6,47 @@ const App = props => {
   const [score, setScore] = useState()
 
   const calculateWinner = () => {
-    // const playerMove = playerBoard
-    // const computerMove = computerBoard
+    console.log({ computerBoard }, 'calculate winner')
+    console.log({ playerBoard })
     if (playerBoard == null && computerBoard === '?') {
       return null
     } else {
       if (playerBoard === computerBoard) {
-        // status.score[2]++
-        return 'Draw'
+        setScore('Draw')
       } else {
         if (
           (playerBoard === 'Rock' && computerBoard === 'Scissors') ||
           (playerBoard === 'Paper' && computerBoard === 'Rock') ||
           (playerBoard === 'Scissors' && computerBoard === 'Paper')
         ) {
-          // status.score[0]++
-          return 'Player wins'
+          setScore('Player wins')
         } else {
-          // status.score[1]++
-          return 'Computer wins'
+          setScore('Computer wins')
         }
       }
     }
   }
-
   const generateMove = () => {
     const objects = ['Rock', 'Paper', 'Scissors']
-    if (playerBoard == null) {
-      return null
-    } else {
-      let random = Math.floor(Math.random() * 3)
-      setComputerBoard(objects[random])
-    }
+    let random = Math.floor(Math.random() * 3)
+    setComputerBoard(objects[random])
   }
 
-  const displayClicked = (rps, move) => {
-    // setDisplay(rps)
+  const displayClicked = rps => {
     setPlayerBoard(rps)
     generateMove()
-    calculateWinner()
   }
+
+  useEffect(() => {
+    console.log({ computerBoard })
+    console.log({ playerBoard })
+    if (
+      typeof playerBoard != 'undefined' &&
+      typeof computerBoard != 'undefined'
+    ) {
+      calculateWinner()
+    }
+  }, [computerBoard])
 
   return (
     <div className="grid">
@@ -76,7 +76,9 @@ const App = props => {
           </button>
         </div>
       </div>
-      <p>{calculateWinner}</p>
+      <div className="score-row">
+        <p className="score">{score}</p>
+      </div>
     </div>
   )
 }

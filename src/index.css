@@ -5,10 +5,12 @@ body {
 }
 
 .grid {
-  height: 500px;
+  height: 585px;
   width: 300px;
   padding: 20px;
-  color: green;
+  color: black;
+  text-align: center;
+  font-size: 1.2rem;
   justify-content: center;
   align-items: center;
   outline: 1px solid #888888;
@@ -39,7 +41,7 @@ small {
 }
 
 .player-row {
-  background-color: #2aa;
+  background-color: #35b8eb;
   height: 150px;
   color: white;
   padding: 20px;
@@ -48,4 +50,15 @@ small {
 
 button {
   margin: 5px 5px 5px 0px;
+}
+
+.score-row {
+  background-color: teal;
+  height: 80px;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 2rem;
+  text-align: center;
+  border: 3px solid;
 }
