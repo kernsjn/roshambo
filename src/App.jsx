@@ -2,57 +2,50 @@ import React, { useState, useEffect } from 'react'
 import Game from './components/Game'
 
 const App = props => {
-  const [board, setBoard] = useState()
-  const [display, setDisplay] = useState('')
+  const [playerBoard, setPlayerBoard] = useState()
+  const [computerBoard, setComputerBoard] = useState()
+  const [score, setScore] = useState()
 
-  const calculateWinner = status => {
-    const playerMove = status.board[0]
-    const computerMove = status.board[1]
-    if (playerMove == null && computerMove === '?') {
+  const calculateWinner = () => {
+    // const playerMove = playerBoard
+    // const computerMove = computerBoard
+    if (playerBoard == null && computerBoard === '?') {
       return null
     } else {
-      if (playerMove === computerMove) {
-        status.score[2]++
+      if (playerBoard === computerBoard) {
+        // status.score[2]++
         return 'Draw'
       } else {
         if (
-          (playerMove === 'Rock' && computerMove === 'Scissors') ||
-          (playerMove === 'Paper' && computerMove === 'Rock') ||
-          (playerMove === 'Scissors' && computerMove === 'Paper')
+          (playerBoard === 'Rock' && computerBoard === 'Scissors') ||
+          (playerBoard === 'Paper' && computerBoard === 'Rock') ||
+          (playerBoard === 'Scissors' && computerBoard === 'Paper')
         ) {
-          status.score[0]++
+          // status.score[0]++
           return 'Player wins'
         } else {
-          status.score[1]++
+          // status.score[1]++
           return 'Computer wins'
         }
       }
     }
   }
 
-  const generateMove = board => {
+  const generateMove = () => {
     const objects = ['Rock', 'Paper', 'Scissors']
-    if (board[0] == null) {
+    if (playerBoard == null) {
       return null
     } else {
       let random = Math.floor(Math.random() * 3)
-      board[1] = objects[random]
-      return board
+      setComputerBoard(objects[random])
     }
   }
 
-  const displayClicked = rps => {
-    setDisplay(rps)
-    setBoard()
-  }
-
-  const handleClick = move => {
-    // setBoard = { board }.slice()
-    // board[0] = move
-    // const ButtonPressed = op => {
-    //   setDisplay('')
-    // }
-    console.log(displayClicked)
+  const displayClicked = (rps, move) => {
+    // setDisplay(rps)
+    setPlayerBoard(rps)
+    generateMove()
+    calculateWinner()
   }
 
   return (
@@ -65,23 +58,25 @@ const App = props => {
       </div>
       <div className="computer-row">
         <div className="col">Computer's move</div>
-        <button bsSize="small">?</button>
+        <p>{computerBoard}</p>
+        <button className="small">?</button>
       </div>
       <div className="player-row">
         <div className="col">Player's move</div>
-        <p>{display}</p>
+        <p>{playerBoard}</p>
         <div className="row">
-          <button bsSize="small" onClick={() => displayClicked('Rock')}>
+          <button className="small" onClick={() => displayClicked('Rock')}>
             Rock
           </button>
-          <button bsSize="small" onClick={() => displayClicked('Paper')}>
+          <button className="small" onClick={() => displayClicked('Paper')}>
             Paper
           </button>
-          <button bsSize="small" onClick={() => displayClicked('Scissors')}>
+          <button className="small" onClick={() => displayClicked('Scissors')}>
             Scissors
           </button>
         </div>
       </div>
+      <p>{calculateWinner}</p>
     </div>
   )
 }
